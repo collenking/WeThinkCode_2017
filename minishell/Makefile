@@ -6,7 +6,7 @@
 #    By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/30 11:02:20 by cnkosi            #+#    #+#              #
-#    Updated: 2017/09/11 17:40:12 by cnkosi           ###   ########.fr        #
+#    Updated: 2017/09/13 16:54:36 by cnkosi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = minishell
 HEADER = minishell.h
 
 SRC = main.c	minishell.c		ft_echo.c	ft_env.c	builtins.c	ft_chdir.c\
-	  ft_execve.c
+	  ft_execve.c	qoutes.c
 
 OBJ = $(SRC:%.c=%.o)
 

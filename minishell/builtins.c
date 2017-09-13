@@ -6,25 +6,44 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/30 11:44:43 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/13 15:10:05 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/13 17:09:05 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    ft_echo(char *line, t_vars *v)
+void	ft_echo_env(char *line)
 {
-	size_t  len;
+	extern char	**environ;
+	char		**env;
+	int			len;
 
+	len = ft_strlen(line);
+	env = environ;
+	while (*env)
+	{
+		if (ft_strncmp(*env, line, len) == 0)
+		{
+			*env += len + 1;
+			ft_putendl(*env);
+			break ;
+		}
+		env++;
+	}
+}
+
+void	ft_echo(char *line, t_vars *v)
+{
 	v->i = 0;
-	while (ft_isspace(line[v->i] && v->i++));
+	while (ft_isspace(line[v->i]))
+		v->i++;
 	line = line + v->i;
-	len = ft_strlen(line) - 1;
-	if ((line[v->i] == 34 || line[v->i] == 39) && 
-	 (line[len] == 34 || line[len] == 39))
+	v->len = ft_strlen(line) - 1;
+	if ((line[v->i] == 34 || line[v->i] == 39) &&
+			(line[v->len] == 34 || line[v->len] == 39))
 	{
 		v->i++;
-		len--;
+		v->len--;
 	}
 	if (ft_strncmp(line, "-e", 2) == 0)
 	{

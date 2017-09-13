@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 17:09:09 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/13 15:10:16 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/13 17:18:31 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,14 @@ void	exec_builtins(char *line, t_vars *v)
 		line = line + 4;
 		ft_echo(line, v);
 	}
-	/*else if (ft_strncmp(line, "cd", 2) == 0 ///|| 
-			ft_strcmp(line, "pwd") == 0 || 
-			ft_strcmp(line, "/bin/pwd") == 0*///)
-        /*ft_chdir(line);
+	else if (ft_strncmp(line, "cd", 2) == 0)
+        ft_chdir(line);
 	else if (ft_strncmp(line, "env", 3) == 0 ||
 			ft_strncmp(line, "setenv", 6) == 0 ||
 			ft_strncmp(line, "unsetenv", 8) == 0)
 		exec_env(line, v);
 	else
-		ft_execve(line);*/
+		ft_execve(line);
 }
 
 void	sh_execute(char *line)

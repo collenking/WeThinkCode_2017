@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/30 11:02:38 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/13 15:10:20 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/13 16:37:38 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct	s_vars
 	int			j;
 	int			len;
 	int			flag;
+	int			status;
 	char		*s;
 	char		*ret;
 	char		**env;
