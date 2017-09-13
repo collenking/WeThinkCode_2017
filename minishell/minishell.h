@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/30 11:02:38 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/12 15:53:43 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/13 15:10:20 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void			ft_echo_normal(char *line);
 void			ft_echo(char *line, t_vars *v);
 void			ft_echo_env(char *line);
 void			ft_echo_loop(char *ln);
+void			ft_quote(char *s[1000], int j);
+void			ft_dquote(char *s[1000], int j);
 void			exec_env(char *line, t_vars *v);
 void			exec_builtins(char *line, t_vars *v);
 void			sh_execute(char *line);

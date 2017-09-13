@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 17:02:09 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/12 17:05:00 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/13 15:10:13 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,43 @@ char	*get_str(char *s, t_vars *v)
 	return (v->ret);
 }
 
+void	ft_quote(char *s[1000], int j)
+{
+	int		i;
+	int		z;
+
+	z = 0;
+	while (z < j)
+	{
+		i = 0;
+		while (s[z][i])
+			(s[z][i] != 39) ? ft_putchar(s[z][i++]) : i++;
+		ft_putchar('\n');
+		z++;
+	}
+}
+
+void	ft_dquote(char *s[1000], int j)
+{
+	int		i;
+	int		z;
+
+	z = 0;
+	while (z < j)
+	{
+		i = 0;
+		while (s[z][i])
+			(s[z][i] != 34) ? ft_putchar(s[z][i++]) : i++;
+		ft_putchar('\n');
+		z++;
+	}
+}
+
 void	ft_echo_loop(char *ln)
 {
 	int		status;
 	int		i;
 	int		j;
-	int		z;
 	char	*line;
 	char	*s[1000];
 
@@ -97,55 +128,51 @@ void	ft_echo_loop(char *ln)
 	s[0] = ln;
 	while (status != 0)
 	{
-		ft_putstr("dquote>");
+		(ln[0] == 34) ? ft_putstr("dquote>") : ft_putstr("quote>");
 		line = read_line();
 		s[j] = (char*)malloc(sizeof(char) * (ft_strlen(line + 1)));
 		s[j] = line;
 		j++;
 		i = 0;
-		while (line[i])
-			(line[i++] == 34) ? status = 0 : 0;
+		if (ln[0] == 39)
+			while (line[i])
+				(line[i++] == 39) ? status = 0 : 0;
+		if (ln[0] == 34)
+			while (line[i])
+				(line[i++] == 34) ? status = 0 : 0;
 	}
-	i = 0;
-	z = 0;
-	while (z < j)
-	{
-		while (s[z][i])
-		{
-			ft_putchar(s[z][i++]);
-		}
-		ft_putchar('\n');
-		z++;
-		//ft_putendl(s[i++]);
-	}
+	(s[0][0] == 39) ? ft_quote(s, j) : ft_dquote(s, j);
 }
 
 void	ft_echo_normal(char *line)
 {
-	/*size_t	len;
+	size_t	len;
 	int		i;
 
 	i = 0;
 	len = ft_strlen(line) - 1;
-	(line[i] == 34 || line[i] == 39) ? i++ : 0;
-	while (i <= (int)len)
+	if (line[i] == 34 || line[i] == 39)
+		ft_echo_loop(line);
+	else
 	{
-		(line[i] == 34) ? i++ : 0;
-		if (line[i] == 92 && line[i + 1] == 110 && i++)
-			ft_putchar('\n');
-		else if (line[i] == 92 && line[i + 1] == 116 && i++)
-			ft_putchar('\t');
-		else if (line[i] == 92 && line[i + 1] == 118 && i++)
-			ft_putchar('\v');
-		else
-			ft_putchar(line[i]);
-		i++;
+		while (i <= (int)len)
+		{
+			(line[i] == 34) ? i++ : 0;
+			if (line[i] == 92 && line[i + 1] == 110 && i++)
+				ft_putchar('\n');
+			else if (line[i] == 92 && line[i + 1] == 116 && i++)
+				ft_putchar('\t');
+			else if (line[i] == 92 && line[i + 1] == 118 && i++)
+				ft_putchar('\v');
+			else
+				ft_putchar(line[i]);
+			i++;
+		}
+		(line[len] == 34 || line[len] == 39) ? len-- : 0;
+		ft_putchar('\n');
 	}
-	(line[len] == 34 || line[len] == 39) ? len-- : 0;*/
 	//line = ft_strcat(line, "\r cool");
-	ft_echo_loop(line);
 	//ft_putstr(line);
-	//ft_putchar('\n');
 }
 
 void    ft_echo_env(char *line)
