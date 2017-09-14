@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/30 11:02:38 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/13 16:37:38 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/14 16:31:09 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,15 @@ void			ft_echo_env(char *line);
 void			ft_echo_loop(char *ln);
 void			ft_quote(char *s[1000], int j);
 void			ft_dquote(char *s[1000], int j);
-void			exec_env(char *line, t_vars *v);
-void			exec_builtins(char *line, t_vars *v);
-void			sh_execute(char *line);
+//void			exec_env(char *line, t_vars *v);
+//void			exec_builtins(char *line, t_vars *v);
+void			sh_execute(char *line, t_vars *v);
 char			*carriage_ret(char *line, t_vars *v);
 char			*get_str(char *s, t_vars *v);
 void			ft_env(char *line, t_vars *v);
 //void			ft_env_name(char *line, t_vars *v);
 void			ft_chdir(char *path);
-void			add_env(char *name, char *value, t_vars *v);
+char			**add_env(char *name, char *value, t_vars *v);
 void			ft_setenv(char *line, t_vars *v);
 void			ft_unsetenv(char *line, t_vars *v);
 void			ft_execve(char *line);

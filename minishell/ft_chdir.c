@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/04 10:48:57 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/11 18:10:20 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/14 14:54:01 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,24 @@ void	chdir_home()
 {
 	extern char	**environ;
 	char		**env;
+	int			i;
 
+	i = 0;
 	env = environ;
-	while (*env)
+	while (env[i])
 	{
-		if (ft_strncmp(*env, "HOME", 4) == 0)
+		if (ft_strncmp(env[i], "HOME", 4) == 0)
 		{
-			*env += 5;
-			chdir(*env);
+			env[i] += 5;
+			chdir(env[i]);
 			break;
 		}
-		env++;
+		i++;
 	}
 }
 
 void	ft_chdir(char *path)
 {
-	char		cwd[1024];
 	char		**token;
 
 	if (ft_strcmp(path, "cd") == 0)
@@ -42,11 +43,9 @@ void	ft_chdir(char *path)
 		token = ft_strsplit(path, ' ');
 		if (ft_strcmp(token[0], "cd") == 0)
 			chdir(token[1]);
-		else if (ft_strcmp(token[0], "pwd") == 0 || 
-				ft_strcmp(token[0], "/bin/pwd") == 0)
-		{
-			getcwd(cwd, sizeof(cwd));
-			ft_putendl(cwd);
-		}
+		else
+			ft_putendl("cd failed");
+		free(token[0]);
+		free(token[1]);
 	}
 }

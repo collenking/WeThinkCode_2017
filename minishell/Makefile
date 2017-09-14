@@ -6,7 +6,7 @@
 #    By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/30 11:02:20 by cnkosi            #+#    #+#              #
-#    Updated: 2017/09/13 16:54:36 by cnkosi           ###   ########.fr        #
+#    Updated: 2017/09/14 13:58:04 by cnkosi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ OBJ = $(SRC:%.c=%.o)
 
 LIBFT = libft/
 
-CFLAGS = -Wextra -Wall -Werror
+CFLAGS = #-Wextra -Wall -Werror
 
 all: $(NAME)
 

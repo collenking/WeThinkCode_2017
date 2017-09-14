@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 17:09:09 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/13 17:18:31 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/14 16:21:18 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,67 +35,43 @@ char    *read_line(void)
     return (line);
 }
 
-void	exec_env(char *line, t_vars *v)
+void	sh_execute(char *line, t_vars *v)
 {
-	if (ft_strncmp(line, "env", 3) == 0)
-	{
-		line += 4;
-		ft_env(line, v);
-	}
-    else if (ft_strncmp(line, "setenv", 6) == 0)
-    {
-        line += 7;
-        ft_setenv(line, v);
-    }
-	else if (ft_strncmp(line, "unsetenv", 8) == 0)
-	{
-		line += 9;
-		ft_unsetenv(line, v);
-	}
-}
-
-void	exec_builtins(char *line, t_vars *v)
-{
+    v->i = 0;
+    if (ft_isspace(line[v->i]))
+        while (ft_isspace(line[v->i]))
+            v->i++;
 	if (ft_strncmp(line, "echo", 4) == 0)
-	{
-		line = line + 4;
-		ft_echo(line, v);
-	}
+		ft_echo(&line[5], v);
 	else if (ft_strncmp(line, "cd", 2) == 0)
-        ft_chdir(line);
-	else if (ft_strncmp(line, "env", 3) == 0 ||
-			ft_strncmp(line, "setenv", 6) == 0 ||
-			ft_strncmp(line, "unsetenv", 8) == 0)
-		exec_env(line, v);
+		ft_chdir(line);
+	else if (ft_strncmp(line, "env", 3) == 0)
+		ft_env(&line[4], v);
+    else if (ft_strncmp(line, "export", 6) == 0)
+		ft_setenv(&line[7], v);
+	else if (ft_strncmp(line, "unsetenv", 8) == 0)
+		ft_unsetenv(&line[9], v);
+	else if (ft_strcmp(line, "exit") == 0)
+		ft_putendl("Don't come here");
 	else
 		ft_execve(line);
 }
 
-void	sh_execute(char *line)
-{
-    t_vars	v;
-
-    v.i = 0;
-    if (ft_isspace(line[v.i]))
-        while (ft_isspace(line[v.i]))
-            v.i++;
-    line = line + v.i;
-	exec_builtins(line, &v);
-}
-
 void    shell_loop(void)
 {
-    int     status;
     char    *line;
+	t_vars	v;
 
-    status = 1;
-    while (status != 0)
+    v.status = 1;
+    while (/*v.status != 0*/1)
     {
         ft_putstr("%> ");
         line = read_line();
         if (ft_strcmp(line, "exit") == 0)
-            status = 0;
+           exit(EXIT_SUCCESS);
+			// v.status = 0;
 		else
-			sh_execute(line);
+			sh_execute(line, &v);
+	//	free(line);
     }
 }

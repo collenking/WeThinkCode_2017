@@ -6,38 +6,44 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 03:27:32 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/11 18:05:18 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/14 14:57:48 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_get_path(char *path, char *cmd)
+char	*ft_get_path(char *paths, char *cmd)
 {
-	char			**ret;
-	char			buff[1000];
-	char 			*r = buff;
-	DIR				*d;
-	struct	dirent	*dir;
+	char **path;
+	char *tmp;
+	char *joinpath;
 
-	ret = ft_strsplit(path, ':');
-	while (*ret)
+	path = ft_strsplit(paths, ':');
+	while (*path)
 	{
-		*ret = ft_strjoin(*ret, "/");
-		d = opendir(*ret);
-		if (d == NULL) return (NULL);
-		while ((dir = readdir(d)) != NULL)
-		{
-			if (ft_strcmp(dir->d_name, cmd) == 0)
-			{
-				*ret = ft_strcat(*ret, cmd);		
-				r = *ret;
-			}
-		}
-		closedir(d);
-		ret++;
+		tmp = ft_strjoin(*path++, "/");
+		joinpath = ft_strjoin(tmp, cmd);
+		free(tmp);
+		if (access(joinpath, F_OK) == 0)
+			return (joinpath);
 	}
-	return (r);
+	return (NULL);
+}
+
+void	ft_fork(char *line, char *path)
+{
+	extern char	**environ;
+	char		**args;
+	pid_t		pid;
+
+	args = ft_strsplit(line, ' ');
+	pid = fork();
+	if (pid == 0)
+		execve(path, args, environ);
+	else if (pid < 0)
+		ft_putendl("Failed to create a child process");
+	wait(&pid);
+	ft_strdel(args);
 }
 
 void	ft_execve(char *line)
@@ -46,37 +52,19 @@ void	ft_execve(char *line)
 	char		**env;
 	char		*path;
 	char		**cmd;
-	char		buff[1000];
 	char		*p;
+	int			i;
 
-	p = buff;
+	i = 0;
 	env = environ;
-	while (*env)
+	while (env[i])
 	{
-		if (ft_strncmp(*env, "PATH", 4) == 0)
-		{
-			*env += 5;
-			path = ft_strdup(*env);
-		}
-		env++;
+		if (ft_strncmp(env[i], "PATH", 4) == 0)
+			path = ft_strdup(&env[i][5]);
+		i++;
 	}
+
 	cmd = ft_strsplit(line, ' ');
 	p = ft_get_path(path, cmd[0]);
 	ft_fork(line, p);
-}
-
-void	ft_fork(char *line, char *path)
-{
-	extern char	**environ;
-	char		**args;
-	//int			ret = 0;
-	pid_t		pid;
-
-	args = ft_strsplit(line, ' ');
-	pid = fork();
-	if (pid == 0)
-		/*ret = */execve(path, args, environ);
-	else if (pid < 0)
-		ft_putendl("Failed to create a child process");
-	wait(&pid);
 }

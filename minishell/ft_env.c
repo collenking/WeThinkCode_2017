@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 14:23:04 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/08 09:14:25 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/14 16:53:00 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	ft_env(char *line, t_vars *v)
 {
 	extern char		**environ;
 
-	v->env = environ;
-	while (*(v->env) && !*line)
-		ft_putendl(*(v->env)++);
+	v->i = 0;
+	while (environ[v->i] && !*line)
+		ft_putendl(environ[v->i++]);
 }
 
 /*void	ft_env_name(char *line, t_vars *v)
@@ -38,7 +38,7 @@ void	ft_env(char *line, t_vars *v)
 		v->env++;
 	}
 }*/
-void	add_env(char *name, char *value, t_vars *v)
+char	**add_env(char *name, char *value, t_vars *v)
 {
 	extern char	**environ;
 
@@ -59,35 +59,36 @@ void	add_env(char *name, char *value, t_vars *v)
 	v->env[v->i] = ft_strcat(v->env[v->i], value);
 	v->env[v->i] = ft_strcat(v->env[v->i], "\0");
 	v->env[v->i + 2] = NULL;
+	return (v->env);
 }
 
 void	ft_setenv(char *line, t_vars *v)
 {
 	extern char	**environ;
 
+	v->i = 0;
 	v->flag = 0;
-	v->token = ft_strsplit(line, ' ');
+	v->token = ft_strsplit(line, '=');
 	v->len = ft_strlen(v->token[0]);
 	v->env = environ;
-	while (*(v->env))
+	while (environ[v->i])
 	{
-		if (ft_strncmp(*(v->env), v->token[0], v->len) == 0)
+		if (ft_strncmp(environ[v->i], v->token[0], v->len) == 0)
 		{
 			v->flag = 1;
-			*(v->env) += v->len;
-			if ((**(v->env)) == '=')
+			if (environ[v->i][v->len] == '=')
 			{
-				ft_strclr(*(v->env));
-				*(v->env) = v->token[0];
-				ft_strcat(*(v->env), "=");
-				ft_strcat(*(v->env), v->token[1]);
+				ft_strclr(environ[v->i]);
+				environ[v->i] = v->token[0];
+				ft_strcat(environ[v->i], "=");
+				ft_strcat(environ[v->i], v->token[1]);
 			}
 			else
-				*(v->env) -= v->len;
+				environ[v->i] -= v->len;
 		}
-		v->env++;
+		v->i++;
 	}
-	(v->flag == 0) ? add_env(v->token[0], v->token[1], v) : 0;
+	(v->flag == 0) ? environ = add_env(v->token[0], v->token[1], v) : 0;
 }
 
 void	ft_unsetenv(char *line, t_vars *v)
@@ -95,20 +96,17 @@ void	ft_unsetenv(char *line, t_vars *v)
 	extern char	**environ;
 	v->i = 0;
 
-	v->token = ft_strsplit(line, ' ');
-	v->len = ft_strlen(v->token[0]);
-	v->env = environ;
-	while (v->env[v->i])
+	v->len = ft_strlen(line);
+	while (environ[v->i])
 	{
-		if (ft_strncmp(v->env[v->i], v->token[0], v->len) == 0)
+		if (ft_strncmp(environ[v->i], line, v->len) == 0)
 		{
-			while (v->env[v->i])
+			while (environ[v->i])
 			{
-				v->env[v->i] = v->env[v->i + 1];
+				environ[v->i] = environ[v->i + 1];
 				v->i++;
 			}
 		}
 		v->i++;
 	}
-
 }
