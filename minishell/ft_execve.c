@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 03:27:32 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/14 14:57:48 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/15 15:17:16 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,41 +30,44 @@ char	*ft_get_path(char *paths, char *cmd)
 	return (NULL);
 }
 
-void	ft_fork(char *line, char *path)
+int		ft_fork(char *line, char *path)
 {
 	extern char	**environ;
 	char		**args;
+	int			ret;
 	pid_t		pid;
 
+	ret = 0;
 	args = ft_strsplit(line, ' ');
 	pid = fork();
 	if (pid == 0)
-		execve(path, args, environ);
+		return (execve(path, args, environ));
 	else if (pid < 0)
 		ft_putendl("Failed to create a child process");
-	wait(&pid);
 	ft_strdel(args);
+	wait(&pid);
+	return (0);
 }
 
-void	ft_execve(char *line)
+void	ft_execve(char *line, t_vars *v)
 {
 	extern char	**environ;
-	char		**env;
-	char		*path;
-	char		**cmd;
-	char		*p;
-	int			i;
 
-	i = 0;
-	env = environ;
-	while (env[i])
+	v->i = 0;
+	while (environ[v->i])
 	{
-		if (ft_strncmp(env[i], "PATH", 4) == 0)
-			path = ft_strdup(&env[i][5]);
-		i++;
+		if (ft_strncmp(environ[v->i], "PATH", 4) == 0)
+			v->fullpath = ft_strdup(&environ[v->i][5]);
+		v->i++;
 	}
-
-	cmd = ft_strsplit(line, ' ');
-	p = ft_get_path(path, cmd[0]);
-	ft_fork(line, p);
+	v->cmd = ft_strsplit(line, ' ');
+	v->path = ft_get_path(v->fullpath, v->cmd[0]);
+	free(v->fullpath);
+	v->fok = ft_fork(line, v->path);
+	if (v->fok == -1)
+	{
+		ft_putstr("minishell: command not found: ");
+		ft_putendl(line);
+		exit(EXIT_FAILURE);
+	}
 }

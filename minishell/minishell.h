@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/30 11:02:38 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/14 16:31:09 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/15 15:18:45 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,14 @@ typedef struct	s_vars
 	int			len;
 	int			flag;
 	int			status;
+	int			fok;
 	char		*s;
 	char		*ret;
 	char		**env;
 	char		**token;
+	char		*fullpath;
+	char		*path;
+	char		**cmd;
 }				t_vars;
 
 typedef struct	s_env
@@ -56,8 +60,8 @@ void			ft_chdir(char *path);
 char			**add_env(char *name, char *value, t_vars *v);
 void			ft_setenv(char *line, t_vars *v);
 void			ft_unsetenv(char *line, t_vars *v);
-void			ft_execve(char *line);
-void			ft_fork(char *line, char *path);
+void			ft_execve(char *line, t_vars *v);
+int				ft_fork(char *line, char *path);
 char			*ft_get_path(char *path, char *cmd);
 
 #endif

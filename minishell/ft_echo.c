@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 17:02:09 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/13 16:46:17 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/15 14:12:22 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,13 +118,14 @@ void	ft_echo_normal(char *line)
 
 	i = 0;
 	len = ft_strlen(line) - 1;
-	if (line[i] == 34 || line[i] == 39)
+	if ((line[i] == 34 && line[len] != 34) ||
+			(line[i] == 39 && line[len] != 39))
 		ft_echo_loop(line);
 	else
 	{
 		while (i <= (int)len)
 		{
-			(line[i] == 34) ? i++ : 0;
+			(line[i] == 34 || line[i] == 39) ? i++ : 0;
 			if (line[i] == 92 && line[i + 1] == 110 && i++)
 				ft_putchar('\n');
 			else if (line[i] == 92 && line[i + 1] == 116 && i++)

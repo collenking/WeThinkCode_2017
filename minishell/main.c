@@ -14,7 +14,7 @@
 
 int     main(void)
 {
-	extern char **environ;
+	//extern char **environ;
 	/*char		**env;
 	int			i;
 

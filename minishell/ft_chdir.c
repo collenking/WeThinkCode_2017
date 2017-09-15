@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/04 10:48:57 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/14 14:54:01 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/15 16:14:58 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,13 @@ void	chdir_home()
 
 void	ft_chdir(char *path)
 {
-	char		**token;
+	char	**token;
+	int		len;
 
-	if (ft_strcmp(path, "cd") == 0)
+	len = ft_strlen(path);
+	while (ft_isspace(path[len - 1]))
+		len--;
+	if (ft_strcmp(path, "cd") == 0 || len == 2)
 		chdir_home();
 	else
 	{

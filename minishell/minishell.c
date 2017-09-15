@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 17:09:09 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/14 16:21:18 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/15 16:31:39 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ void	sh_execute(char *line, t_vars *v)
     if (ft_isspace(line[v->i]))
         while (ft_isspace(line[v->i]))
             v->i++;
+	v->len = ft_strlen(line);
+    if (ft_isspace(line[v->len - 1]))
+        while (ft_isspace(line[v->len - 1]))
+            v->len++;
 	if (ft_strncmp(line, "echo", 4) == 0)
 		ft_echo(&line[5], v);
 	else if (ft_strncmp(line, "cd", 2) == 0)
@@ -54,7 +58,7 @@ void	sh_execute(char *line, t_vars *v)
 	else if (ft_strcmp(line, "exit") == 0)
 		ft_putendl("Don't come here");
 	else
-		ft_execve(line);
+		ft_execve(line, v);
 }
 
 void    shell_loop(void)
@@ -62,7 +66,7 @@ void    shell_loop(void)
     char    *line;
 	t_vars	v;
 
-    v.status = 1;
+    //v.status = 1;
     while (/*v.status != 0*/1)
     {
         ft_putstr("%> ");
@@ -72,6 +76,6 @@ void    shell_loop(void)
 			// v.status = 0;
 		else
 			sh_execute(line, &v);
-	//	free(line);
+		free(line);
     }
 }

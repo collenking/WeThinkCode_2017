@@ -21,7 +21,7 @@ OBJ = $(SRC:%.c=%.o)
 
 LIBFT = libft/
 
-CFLAGS = #-Wextra -Wall -Werror
+CFLAGS = -Wextra -Wall -Werror
 
 all: $(NAME)
 
