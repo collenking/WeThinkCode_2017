@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 17:09:09 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/15 16:31:39 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/19 18:10:24 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,30 @@ char    *read_line(void)
         free(tmp);
         i++;
         if (buff == '\n')
-            break;
+            break ;
     }
-    line[i - 1] =  0;
+    line[i - 1] = '\0';
     return (line);
+}
+
+char    *spaces(char *s, t_vars *v)
+{
+    v->i = 0;
+    v->j = 0;
+    v->len = ft_strlen(s);
+    v->ret = (char*)malloc(sizeof(char) * v->len + 1);
+    while (s[v->i])
+    {
+        if (ft_isspace(s[v->i]))
+        {
+            v->ret[v->j++] = 32;
+            while (ft_isspace(s[v->i]))
+                v->i++;
+        }
+        v->ret[v->j++] = s[v->i++];
+    }
+    v->ret[v->j] = '\0';
+    return (v->ret);
 }
 
 void	sh_execute(char *line, t_vars *v)
@@ -55,8 +75,6 @@ void	sh_execute(char *line, t_vars *v)
 		ft_setenv(&line[7], v);
 	else if (ft_strncmp(line, "unsetenv", 8) == 0)
 		ft_unsetenv(&line[9], v);
-	else if (ft_strcmp(line, "exit") == 0)
-		ft_putendl("Don't come here");
 	else
 		ft_execve(line, v);
 }
@@ -66,16 +84,15 @@ void    shell_loop(void)
     char    *line;
 	t_vars	v;
 
-    //v.status = 1;
-    while (/*v.status != 0*/1)
+    while (1)
     {
         ft_putstr("%> ");
         line = read_line();
         if (ft_strcmp(line, "exit") == 0)
            exit(EXIT_SUCCESS);
-			// v.status = 0;
-		else
+		else if (!ft_isempty(line))
 			sh_execute(line, &v);
 		free(line);
     }
+	free(line);
 }

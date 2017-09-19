@@ -37,26 +37,6 @@ char	*carriage_ret(char *line, t_vars *v)
 	return (v->s);
 }
 
-char	*spaces(char *s, t_vars *v)
-{
-	v->i = 0;
-	v->j = 0;
-	v->len = ft_strlen(s);
-	v->ret = (char*)malloc(sizeof(char) * v->len + 1);
-	while (s[v->i])
-	{
-		if (ft_isspace(s[v->i]))
-		{
-			v->ret[v->j++] = 32;
-			while (ft_isspace(s[v->i]))
-				v->i++;
-		}
-		v->ret[v->j++] = s[v->i++];
-	}
-	v->ret[v->j] = '\0';
-	return (v->ret);
-}
-
 char	*get_str(char *s, t_vars *v)
 {
 	v->i = 0;

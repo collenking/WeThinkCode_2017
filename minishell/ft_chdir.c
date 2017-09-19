@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/04 10:48:57 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/15 16:14:58 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/19 09:41:15 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,11 @@ void	chdir_home()
 
 void	ft_chdir(char *path)
 {
-	char	**token;
+	char	**token = NULL;
 	int		len;
+	int		cd;
 
+	cd = 0;
 	len = ft_strlen(path);
 	while (ft_isspace(path[len - 1]))
 		len--;
@@ -46,10 +48,20 @@ void	ft_chdir(char *path)
 	{
 		token = ft_strsplit(path, ' ');
 		if (ft_strcmp(token[0], "cd") == 0)
-			chdir(token[1]);
+			cd = chdir(token[1]);
 		else
 			ft_putendl("cd failed");
-		free(token[0]);
-		free(token[1]);
 	}
+	if (cd == -1)
+	{
+		ft_putstr("cd: no such file or directory: ");
+		ft_putendl(token[1]);
+	}
+	if (ft_wrd_cnt(path) > 2)
+	{
+		ft_putstr("cd: string not in pwd: ");
+		ft_putendl(token[1]);
+	}
+	free(token[0]);
+	free(token[1]);
 }

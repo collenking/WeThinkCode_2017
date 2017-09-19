@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 03:27:32 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/15 15:17:16 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/19 10:27:58 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,8 @@ int		ft_fork(char *line, char *path)
 {
 	extern char	**environ;
 	char		**args;
-	int			ret;
 	pid_t		pid;
 
-	ret = 0;
 	args = ft_strsplit(line, ' ');
 	pid = fork();
 	if (pid == 0)

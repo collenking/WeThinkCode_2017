@@ -42,6 +42,7 @@ typedef struct	s_env
 }				t_env;
 
 char			*read_line(void);
+char    		*spaces(char *s, t_vars *v);
 void			shell_loop(void);
 void			ft_echo_normal(char *line);
 void			ft_echo(char *line, t_vars *v);
