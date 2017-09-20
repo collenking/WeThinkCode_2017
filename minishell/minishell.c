@@ -32,7 +32,10 @@ char    *read_line(void)
             break ;
     }
     line[i - 1] = '\0';
-    return (line);
+    if (line)
+        return (line);
+    free(line);
+    return (NULL);
 }
 
 char    *spaces(char *s, t_vars *v)
