@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/30 11:00:48 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/19 09:17:40 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/21 17:22:12 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include <stdio.h>
 int     main(void)
 {
-    char *line = read_line();
+    /*char *line = read_line();
     printf("%s\n", line);
-    free(line);
-    //shell_loop();
+    free(line);*/
+    shell_loop();
     return (0);
 }

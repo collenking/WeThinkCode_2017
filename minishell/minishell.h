@@ -34,6 +34,7 @@ typedef struct	s_vars
 	char		*fullpath;
 	char		*path;
 	char		**cmd;
+	int			chd;
 }				t_vars;
 
 typedef struct	s_env
@@ -52,11 +53,13 @@ void			ft_quote(char *s[1000], int j);
 void			ft_dquote(char *s[1000], int j);
 //void			exec_env(char *line, t_vars *v);
 //void			exec_builtins(char *line, t_vars *v);
+void    		sh_exec_path(char *line, t_vars *v);
 void			sh_execute(char *line, t_vars *v);
 char			*carriage_ret(char *line, t_vars *v);
 char			*get_str(char *s, t_vars *v);
-void			ft_env(char *line, t_vars *v);
+void			ft_env();
 //void			ft_env_name(char *line, t_vars *v);
+char			*chdir_home();
 void			ft_chdir(char *path);
 char			**add_env(char *name, char *value, t_vars *v);
 void			ft_setenv(char *line, t_vars *v);

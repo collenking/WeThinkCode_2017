@@ -12,13 +12,14 @@
 
 #include "minishell.h"
 
-void	ft_env(char *line, t_vars *v)
+void	ft_env()
 {
+	int		i;
 	extern char		**environ;
 
-	v->i = 0;
-	while (environ[v->i] && !*line)
-		ft_putendl(environ[v->i++]);
+	i = 0;
+	while (environ[i])
+		ft_putendl(environ[i++]);
 }
 
 /*void	ft_env_name(char *line, t_vars *v)

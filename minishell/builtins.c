@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/30 11:44:43 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/13 17:09:05 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/21 14:24:07 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	ft_echo(char *line, t_vars *v)
 	if (ft_strncmp(line, "-e", 2) == 0)
 	{
 		line = line + 3;
+		ft_putendl(line);
 		ft_putendl(carriage_ret(get_str(line, v), v));
 	}
 	else if (ft_strncmp(line, "$", 1) == 0)

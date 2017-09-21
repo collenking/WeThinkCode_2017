@@ -34,7 +34,7 @@ char    *read_line(void)
     line[i - 1] = '\0';
     if (line)
         return (line);
-    free(line);
+    //free(line);
     return (NULL);
 }
 
@@ -58,6 +58,28 @@ char    *spaces(char *s, t_vars *v)
     return (v->ret);
 }
 
+void    sh_exec_path(char *line, t_vars *v)
+{
+    if (ft_strncmp(line, "/bin/", 5) == 0)
+        ft_execve(&line[4], v);
+    else if (ft_strncmp(line, "/usr/local/sbin/", 16) == 0)
+        ft_execve(&line[15], v);
+    else if (ft_strncmp(line, "/usr/local/bin/", 15) == 0)
+        ft_execve(&line[14], v);
+    else if (ft_strncmp(line, "/usr/sbin/", 10) == 0)
+        ft_execve(&line[9], v);
+    else if (ft_strncmp(line, "/usr/bin/", 9) == 0)
+        ft_execve(&line[8], v);
+    else if (ft_strncmp(line, "/sbin/", 6) == 0)
+        ft_execve(&line[5], v);
+    else if (ft_strncmp(line, "/usr/games/", 11) == 0)
+        ft_execve(&line[10], v);
+    else if (ft_strncmp(line, "/usr/local/games/", 17) == 0)
+        ft_execve(&line[16], v);
+    else
+        ft_execve(line, v);
+}
+
 void	sh_execute(char *line, t_vars *v)
 {
     v->i = 0;
@@ -73,13 +95,15 @@ void	sh_execute(char *line, t_vars *v)
 	else if (ft_strncmp(line, "cd", 2) == 0)
 		ft_chdir(line);
 	else if (ft_strncmp(line, "env", 3) == 0)
-		ft_env(&line[4], v);
+		ft_env();
     else if (ft_strncmp(line, "export", 6) == 0)
 		ft_setenv(&line[7], v);
 	else if (ft_strncmp(line, "unsetenv", 8) == 0)
 		ft_unsetenv(&line[9], v);
 	else
-		ft_execve(line, v);
+    {
+        sh_exec_path(line, v);
+    }
 }
 
 void    shell_loop(void)
