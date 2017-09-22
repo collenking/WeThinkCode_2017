@@ -61,3 +61,25 @@ void	ft_echo(char *line, t_vars *v)
 	else
 		ft_echo_normal(get_str(line, v));
 }
+
+void	ft_chdir(char *path, t_vars *v)
+{
+	char	buff[1000];
+	char	*old_wd;
+	int		len;
+
+	len = ft_strlen(getcwd(buff, sizeof(buff)));
+	old_wd = (char*)malloc(sizeof(old_wd) * (len + 1));
+	old_wd = getcwd(buff, sizeof(buff));
+	v->len = ft_strlen(path);
+	v->token = ft_strsplit(path, ' ');
+	if (ft_wrd_cnt(path) > 2)
+	{
+		ft_putstr("cd: string not in pwd: ");
+		ft_putendl(v->token[1]);
+	}
+	else
+	{
+		ft_redirect(path, old_wd, v);
+	}
+}

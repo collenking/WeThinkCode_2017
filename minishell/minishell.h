@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/30 11:02:38 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/15 15:18:45 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/22 22:58:41 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,12 @@ char			*carriage_ret(char *line, t_vars *v);
 char			*get_str(char *s, t_vars *v);
 void			ft_env();
 //void			ft_env_name(char *line, t_vars *v);
-char			*chdir_home();
-void			ft_chdir(char *path);
+char			*chdir_home(void);
+char			*chdir_prev(void);
+void			update_pwd(char *old_pwd, char *cur_pwd);
+void			change_dir(char *path, char *old_wd, t_vars *v);
+void			ft_redirect(char *path, char *old_wd, t_vars *v);
+void			ft_chdir(char *path, t_vars *v);
 char			**add_env(char *name, char *value, t_vars *v);
 void			ft_setenv(char *line, t_vars *v);
 void			ft_unsetenv(char *line, t_vars *v);

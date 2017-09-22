@@ -6,7 +6,7 @@
 /*   By: cnkosi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 17:09:09 by cnkosi            #+#    #+#             */
-/*   Updated: 2017/09/19 18:10:24 by cnkosi           ###   ########.fr       */
+/*   Updated: 2017/09/22 22:58:31 by cnkosi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	sh_execute(char *line, t_vars *v)
 	if (ft_strncmp(line, "echo", 4) == 0)
 		ft_echo(&line[5], v);
 	else if (ft_strncmp(line, "cd", 2) == 0)
-		ft_chdir(line);
+		ft_chdir(line, v);
 	else if (ft_strncmp(line, "env", 3) == 0)
 		ft_env();
     else if (ft_strncmp(line, "export", 6) == 0)
