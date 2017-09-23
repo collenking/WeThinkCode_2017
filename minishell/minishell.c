@@ -77,7 +77,7 @@ int     sh_exec_path(char *line, t_vars *v)
     else if (ft_strncmp(line, "/usr/local/games/", 17) == 0)
         ft_execve(&line[16], v);
     else
-        ft_execve(line, v);
+        ft_execve1(line, v);
     return (1);
 }
 

@@ -69,6 +69,7 @@ char			**add_env(char *name, char *value, t_vars *v);
 void			ft_setenv(char *line, t_vars *v);
 void			ft_unsetenv(char *line, t_vars *v);
 void			ft_execve(char *line, t_vars *v);
+void			ft_execve1(char *line, t_vars *v);
 int				ft_fork(char *line, char *path);
 char			*ft_get_path(char *path, char *cmd);
 
