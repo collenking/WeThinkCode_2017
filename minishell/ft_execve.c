@@ -26,6 +26,8 @@ char	*ft_get_path(char *paths, char *cmd)
 		free(tmp);
 		if (access(joinpath, F_OK) == 0)
 			return (joinpath);
+		else
+			return ("error");
 	}
 	return (NULL);
 }
@@ -60,12 +62,12 @@ void	ft_execve(char *line, t_vars *v)
 	}
 	v->cmd = ft_strsplit(line, ' ');
 	v->path = ft_get_path(v->fullpath, v->cmd[0]);
-	free(v->fullpath);
 	v->fok = ft_fork(line, v->path);
-	if (v->fok == -1)
+	if (v->fok == -1 || ft_strcmp(v->path, "error") == 0)
 	{
 		ft_putstr("minishell: command not found: ");
 		ft_putendl(line);
 		exit(EXIT_FAILURE);
 	}
+	free(v->fullpath);
 }

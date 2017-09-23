@@ -22,23 +22,6 @@ void	ft_env()
 		ft_putendl(environ[i++]);
 }
 
-/*void	ft_env_name(char *line, t_vars *v)
-{
-	extern char		**environ;
-	int				len;
-
-	len = ft_strlen(line);
-	v->env = environ;
-	while (*(v->env))
-	{
-		if (ft_strncmp(*(v->env), line, len) == 0)
-		{
-			ft_putendl(*(v->env));
-			break ;
-		}
-		v->env++;
-	}
-}*/
 char	**add_env(char *name, char *value, t_vars *v)
 {
 	extern char	**environ;

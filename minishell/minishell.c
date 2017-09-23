@@ -58,7 +58,7 @@ char    *spaces(char *s, t_vars *v)
     return (v->ret);
 }
 
-void    sh_exec_path(char *line, t_vars *v)
+int     sh_exec_path(char *line, t_vars *v)
 {
     if (ft_strncmp(line, "/bin/", 5) == 0)
         ft_execve(&line[4], v);
@@ -78,6 +78,7 @@ void    sh_exec_path(char *line, t_vars *v)
         ft_execve(&line[16], v);
     else
         ft_execve(line, v);
+    return (1);
 }
 
 void	sh_execute(char *line, t_vars *v)

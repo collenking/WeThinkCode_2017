@@ -17,7 +17,6 @@ char	*chdir_home(void)
 	extern char	**environ;
 	int			i;
 
-
 	i = 0;
 	while (environ[i])
 	{
@@ -35,7 +34,6 @@ char	*chdir_prev(void)
 {
 	extern char	**environ;
 	int			i;
-
 
 	i = 0;
 	while (environ[i])
@@ -69,7 +67,7 @@ void	update_pwd(char *old_pwd, char *cur_pwd)
 void	change_dir(char *path, char *old_wd, t_vars *v)
 {
 	char	buff[1000];
-	
+
 	v->token = ft_strsplit(path, ' ');
 	if (ft_strcmp(v->token[0], "cd") == 0)
 	{

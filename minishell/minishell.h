@@ -53,7 +53,7 @@ void			ft_quote(char *s[1000], int j);
 void			ft_dquote(char *s[1000], int j);
 //void			exec_env(char *line, t_vars *v);
 //void			exec_builtins(char *line, t_vars *v);
-void    		sh_exec_path(char *line, t_vars *v);
+int	    		sh_exec_path(char *line, t_vars *v);
 void			sh_execute(char *line, t_vars *v);
 char			*carriage_ret(char *line, t_vars *v);
 char			*get_str(char *s, t_vars *v);

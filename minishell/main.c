@@ -14,9 +14,6 @@
 #include <stdio.h>
 int     main(void)
 {
-    /*char *line = read_line();
-    printf("%s\n", line);
-    free(line);*/
     shell_loop();
     return (0);
 }
