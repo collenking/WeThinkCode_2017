@@ -25,7 +25,7 @@ char    *read_line(void)
     {
         tmp = ft_strnew(1);
         ft_strncpy(tmp, &buff, 1);
-        line = ft_strjoin(line, tmp);
+        line = ft_strcat(line, tmp);
         free(tmp);
         i++;
         if (buff == '\n')
@@ -61,21 +61,21 @@ char    *spaces(char *s, t_vars *v)
 int     sh_exec_path(char *line, t_vars *v)
 {
     if (ft_strncmp(line, "/bin/", 5) == 0)
-        ft_execve(&line[4], v);
+        ft_execve(&line[4], "/bin/", v);
     else if (ft_strncmp(line, "/usr/local/sbin/", 16) == 0)
-        ft_execve(&line[15], v);
+        ft_execve(&line[15], "/usr/local/sbin/", v);
     else if (ft_strncmp(line, "/usr/local/bin/", 15) == 0)
-        ft_execve(&line[14], v);
+        ft_execve(&line[14], "/usr/local/bin/", v);
     else if (ft_strncmp(line, "/usr/sbin/", 10) == 0)
-        ft_execve(&line[9], v);
+        ft_execve(&line[9], "/usr/sbin/", v);
     else if (ft_strncmp(line, "/usr/bin/", 9) == 0)
-        ft_execve(&line[8], v);
+        ft_execve(&line[8], "/usr/bin/", v);
     else if (ft_strncmp(line, "/sbin/", 6) == 0)
-        ft_execve(&line[5], v);
+        ft_execve(&line[5], "/sbin/", v);
     else if (ft_strncmp(line, "/usr/games/", 11) == 0)
-        ft_execve(&line[10], v);
+        ft_execve(&line[10], "/usr/games/", v);
     else if (ft_strncmp(line, "/usr/local/games/", 17) == 0)
-        ft_execve(&line[16], v);
+        ft_execve(&line[16], "/usr/local/games/", v);
     else
         ft_execve1(line, v);
     return (1);
@@ -97,14 +97,12 @@ void	sh_execute(char *line, t_vars *v)
 		ft_chdir(line, v);
 	else if (ft_strncmp(line, "env", 3) == 0)
 		ft_env();
-    else if (ft_strncmp(line, "export", 6) == 0)
+    else if (ft_strncmp(line, "setenv", 6) == 0)
 		ft_setenv(&line[7], v);
 	else if (ft_strncmp(line, "unsetenv", 8) == 0)
 		ft_unsetenv(&line[9], v);
 	else
-    {
         sh_exec_path(line, v);
-    }
 }
 
 void    shell_loop(void)

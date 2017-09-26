@@ -18,6 +18,8 @@ char	*ft_get_path(char *paths, char *cmd)
 	char *tmp;
 	char *joinpath;
 
+	if (!paths)
+		return (NULL);
 	path = ft_strsplit(paths, ':');
 	while (*path)
 	{
@@ -42,47 +44,24 @@ int		ft_fork(char *line, char *path)
 		return (execve(path, args, environ));
 	else if (pid < 0)
 		ft_putendl("Failed to create a child process");
-	ft_strdel(args);
 	wait(&pid);
+	ft_strdel(args);
 	return (0);
 }
 
-void	ft_execve(char *line, t_vars *v)
+void	ft_execve(char *line, char *path, t_vars *v)
 {
 	extern char	**environ;
 
 	v->i = 0;
-	while (environ[v->i])
-	{
-		if (ft_strncmp(environ[v->i], "PATH", 4) == 0)
-			v->fullpath = ft_strdup(&environ[v->i][5]);
-		v->i++;
-	}
 	v->cmd = ft_strsplit(line, ' ');
-	v->path = ft_get_path(v->fullpath, v->cmd[0]);
+	v->path = ft_get_path(path, v->cmd[0]);
 	v->fok = ft_fork(line, v->path);
 	if (v->fok == -1)
 	{
 		ft_putstr("minishell: command not found: ");
 		ft_putendl(line);
-		exit(EXIT_FAILURE);
-	}
-	free(v->fullpath);
-}
-
-void	ft_execve1(char *line, t_vars *v)
-{
-	extern char	**environ;
-
-	v->i = 0;
-	v->cmd = ft_strsplit(line, ' ');
-	v->path = ft_get_path(v->fullpath, v->cmd[0]);
-	v->fok = ft_fork(line, v->path);
-	if (v->fok == -1 || !v->fullpath)
-	{
-		ft_putstr("minishell: command not found: ");
-		ft_putendl(line);
-		exit(EXIT_FAILURE);
+		return ;
 	}
 	else
 	{
@@ -92,6 +71,33 @@ void	ft_execve1(char *line, t_vars *v)
 				v->fullpath = ft_strdup(&environ[v->i][5]);
 			v->i++;
 		}
-		//free(v->fullpath);
+	}
+}
+
+void	ft_execve1(char *line, t_vars *v)
+{
+	extern char	**environ;
+
+	v->i = 0;
+	v->fullpath = NULL;
+	while (environ[v->i])
+	{
+		if (ft_strncmp(environ[v->i], "PATH", 4) == 0)
+			v->fullpath = ft_strdup(&environ[v->i][5]);
+		v->i++;
+	}
+	v->cmd = ft_strsplit(line, ' ');
+	if (!(v->path = ft_get_path(v->fullpath, v->cmd[0])))
+	{
+		ft_putstr("minishell: command not found: ");
+		ft_putendl(line);
+		return ;
+	}
+	v->fok = ft_fork(line, v->path);
+	if (v->fok == -1)
+	{
+		ft_putstr("minishell: command not found: ");
+		ft_putendl(line);
+		return ;
 	}
 }

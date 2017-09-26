@@ -16,6 +16,7 @@ void	ft_echo_env(char *line)
 {
 	extern char	**environ;
 	char		**env;
+	char		*s;
 	int			len;
 
 	len = ft_strlen(line);
@@ -24,8 +25,10 @@ void	ft_echo_env(char *line)
 	{
 		if (ft_strncmp(*env, line, len) == 0)
 		{
-			*env += len + 1;
-			ft_putendl(*env);
+			s = (char*)malloc(sizeof(s) * (ft_strlen(*env) + 1));
+			s = ft_strcpy(s, *env);
+			ft_putendl(&s[len + 1]);
+			free(s);
 			break ;
 		}
 		env++;

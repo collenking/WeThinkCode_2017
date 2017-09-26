@@ -88,10 +88,23 @@ void	change_dir(char *path, char *old_wd, t_vars *v)
 void	ft_redirect(char *path, char *old_wd, t_vars *v)
 {
 	char	buff[1000];
+	char	*line;
 	
+	line = ft_strnew(1);
 	while (ft_isspace(path[v->len - 1]))
 		v->len--;
-	if (ft_strncmp(path, "cd", 2) == 0 &&
+	ft_putendl(path);
+	if (ft_strncmp(path, "cd ~", 4) == 0)
+	{
+		//chdir(chdir_home());
+		line = ft_strcpy(line, "cd ");
+		line = ft_strcat(line, &path[5]);
+		ft_putendl(line);
+		chdir(chdir_home());
+		change_dir("cd Documents/WeThinkCode_2017", old_wd, v);
+		//update_pwd(old_wd, getcwd(buff, sizeof(buff)));
+	}
+	else if (ft_strncmp(path, "cd", 2) == 0 &&
 			(v->len == 2 || ft_wrd_cnt(path) == 1))
 	{
 		chdir(chdir_home());
@@ -103,7 +116,5 @@ void	ft_redirect(char *path, char *old_wd, t_vars *v)
 		update_pwd(old_wd, getcwd(buff, sizeof(buff)));
 	}
 	else
-	{
-		change_dir(path, old_wd, v);
-	}
+		ft_putendl("error");//change_dir(path, old_wd, v);
 }
